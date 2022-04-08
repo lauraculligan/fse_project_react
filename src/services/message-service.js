@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-const USERS_API = `${BASE_URL}/api/users`;
+const USERS_API = `${BASE_URL}/users`;
 
 
 const api = axios.create({
@@ -18,4 +18,8 @@ export const getMessagesSentToMe = (userId) =>
 
 export const sendMessage = () =>
     api.post(`${USERS_API}/messages/`)
+        .then(response => response.data);
+
+export const getMessagesBetweenUsers = (userId1,userId2) =>
+    api.get(`${USERS_API}/${userId1}/messages/${userId2}`)
         .then(response => response.data);
