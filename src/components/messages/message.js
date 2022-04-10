@@ -1,8 +1,15 @@
 const Message = ({message, right}) => {
-    let date = message.sentOn
-    // let dateString = date.toDateString().substring(0,date.toDateString().length-4)
-    // dateString +=  " " + date.getHours().toString()
-    // dateString +=  ":" + date.getMinutes().toString()
+    let dateString = ""
+    try {
+        let date = message.sentOn
+        dateString = date.toDateString().substring(0,date.toDateString().length-4)
+        dateString +=  " " + date.getHours().toString()
+        dateString +=  ":" + date.getMinutes().toString() + " "
+    } catch (e){
+        dateString = "2/3 2:13"
+    }
+
+
     let messageClass = "fsep-messageCont"
     let dateClass = "fsep-messageDate"
     if (right) {
@@ -13,10 +20,12 @@ const Message = ({message, right}) => {
         dateClass += " left"
     }
     return(
+        <div className={"row"}>
         <div className={`${messageClass}`}>
-            {message.message}
-            {/*<span className={`${dateClass}`}>{dateString}</span>*/}
+            <span>{message.message}</span>
+            <span className={`${dateClass}`}>{dateString}</span>
 
+        </div>
         </div>
     );
 };

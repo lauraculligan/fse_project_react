@@ -10,7 +10,6 @@ const Messages = () => {
 
     const navigate = useNavigate();
     const [curUser, setUser] = useState({});
-    // const messages = []
     const [messages, setMessages] = useState({});
     useEffect(async () => {
         try {
@@ -23,7 +22,7 @@ const Messages = () => {
     useEffect(async () => {
         try {
             const msgs = await messageService.getMessagesBetweenUsers(curUser._id, "624f8ae7341bee73a9bb71a2");
-            console.log(msgs)
+
             setMessages(msgs);
         } catch (e) {
             navigate('/login');
