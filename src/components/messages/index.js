@@ -12,13 +12,18 @@ const Messages = () => {
     const [curUser, setUser] = useState({});
     const [messages, setMessages] = useState({});
     const [message, setMessage] = useState("");
+    let toUser = "624f8ae7341bee73a9bb71a2";
 
     const findMessages = async () =>
-       await messageService.getMessagesBetweenUsers(curUser._id, "624f8ae7341bee73a9bb71a2")
+       await messageService.getMessagesBetweenUsers(curUser._id, toUser)
             .then(messages => setMessages(messages));
-    const sendMessage = async () =>
-        await messageService.sendMessage(message)
-            .then(findMessages);
+    const sendMessage = async () => {
+        let messageToSend = {fromUser: curUser._id,
+                    toUser: toUser,
+                    message: message,
+                    sentOn: new Date()}
+        await messageService.sendMessage(messageToSend).then(findMessages);
+    }
 
     useEffect(async () => {
         try {
@@ -30,7 +35,7 @@ const Messages = () => {
     }, []);
     useEffect(async () => {
         try {
-            const msgs = await messageService.getMessagesBetweenUsers(curUser._id, "624f8ae7341bee73a9bb71a2");
+            const msgs = await messageService.getMessagesBetweenUsers(curUser._id, toUser);
 
             setMessages(msgs);
         } catch (e) {
