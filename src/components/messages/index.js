@@ -25,10 +25,6 @@ const Messages = () => {
         await messageService.sendMessage(messageToSend).then(findMessages);
     }
 
-
-
-
-
     useEffect(async () => {
         try {
             const user = await securityService.profile();
@@ -37,6 +33,7 @@ const Messages = () => {
             navigate('/login');
         }
     }, []);
+
     useEffect(async () => {
         try {
             const msgs = await messageService.getMessagesBetweenUsers(curUser._id, toUser);
@@ -46,7 +43,6 @@ const Messages = () => {
             navigate('/login');
         }
     },[curUser])
-
 
     return(<>
             <h1>Messages Screen</h1>
@@ -79,7 +75,6 @@ const Messages = () => {
                 </div>
             </div>
         </>
-
     );
 };
 export default Messages;
