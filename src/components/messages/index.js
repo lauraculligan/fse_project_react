@@ -3,14 +3,23 @@ import Message from "./message";
 import * as securityService from "../../services/security-service";
 import * as messageService from "../../services/message-service";
 import {useEffect, useState} from "react"
-import { useNavigate} from "react-router-dom";
-
+import {useNavigate} from "react-router-dom";
+import * as service from "../../services/tuits-service";
 
 const Messages = () => {
 
     const navigate = useNavigate();
     const [curUser, setUser] = useState({});
     const [messages, setMessages] = useState({});
+    const [message, setMessage] = useState("");
+
+    const findMessages = async () =>
+       await messageService.getMessagesBetweenUsers(curUser._id, "624f8ae7341bee73a9bb71a2")
+            .then(messages => setMessages(messages));
+    const sendMessage = async () =>
+        await messageService.sendMessage(message)
+            .then(findMessages);
+
     useEffect(async () => {
         try {
             const user = await securityService.profile();
@@ -28,6 +37,8 @@ const Messages = () => {
             navigate('/login');
         }
     },[curUser])
+
+
   return(<>
         <h1>Messages Screen</h1>
 
@@ -36,6 +47,26 @@ const Messages = () => {
                                          <Message message={msg}
                                          right={msg.fromUser === curUser._id}/>)
           }
+
+      <div className="p-2 w-100">
+          <div className="row align-items-center">
+              <div className="col-10 ttr-font-size-100pc border-2 text-primary">
+                   <textarea
+                       onChange={(e) =>
+                           setMessage(e.target.value)}
+                       placeholder="Enter Message..."
+                       className="w-100 border-2"
+                   ></textarea>
+              </div>
+              <div className="col-2">
+                  <button onClick={sendMessage}
+                     className={`btn btn-primary rounded-pill fa-pull-left
+                                fw-bold ps-4 pe-4`}>
+                      Send
+                  </button>
+              </div>
+          </div>
+      </div>
       </>
 
   );
