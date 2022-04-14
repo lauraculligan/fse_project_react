@@ -22,6 +22,7 @@ const Messages = () => {
             toUser: toUser,
             message: message,
             sentOn: new Date()}
+
         await messageService.sendMessage(messageToSend).then(findMessages);
     }
 
