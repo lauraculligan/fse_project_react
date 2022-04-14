@@ -10,6 +10,7 @@ function Navigation() {
     {label: 'Home', icon: 'fa-home', path: '/home'},
     {label: 'Explore', icon: 'fa-hashtag', path: '/explore'},
     {label: 'Notifications', icon: 'fa-bell', path: '/notifications'},
+    {label: 'Search', icon:'fa-search', path: '/search'},
     {label: 'Messages', icon: 'fa-envelope', path: '/messages'},
     {label: 'Bookmarks', icon: 'fa-bookmark', path: '/bookmarks'},
     {label: 'Lists', icon: 'fa-list', path: '/lists'},
