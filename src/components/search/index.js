@@ -2,6 +2,8 @@
 import React, {useState} from "react";
 import * as usersService from "../../services/users-service";
 import {useNavigate} from "react-router-dom";
+import Tuit from "../tuits/tuit";
+import SearchResults from "./search";
 
 const Search = () => {
     const navigate = useNavigate();
@@ -11,17 +13,20 @@ const Search = () => {
     const searchUsers = async () => {
         await usersService.searchUserByName(username)
             .then(foundUsers => setFoundUsers(foundUsers));
-        console.log(foundUsers);
     }
 
     return (<>
         <h1>Search Screen</h1>
-
-            {
-                JSON.stringify(foundUsers)
-            }
+            <div>
+                <ul className="ttr-results list-group">
+                    {
+                        foundUsers.map && <SearchResults users={foundUsers} />
+                    }
+                </ul>
+            </div>
 
         <div className="p-2 w-100">
+
             <div className="row align-items-center">
                 <div className="col-10 ttr-font-size-100pc border-2 text-primary">
                    <textarea
