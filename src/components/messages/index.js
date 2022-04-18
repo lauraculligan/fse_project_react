@@ -1,18 +1,23 @@
 import React from "react";
 import Message from "./message";
-import Search from "../search/index.js"
 import * as securityService from "../../services/security-service";
 import * as messageService from "../../services/message-service";
 import {useEffect, useState} from "react"
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
+
 
 const Messages = () => {
-
+    const location = useLocation();
     const navigate = useNavigate();
     const [curUser, setUser] = useState({});
     const [messages, setMessages] = useState({});
     const [message, setMessage] = useState("");
-    let toUser = "624f8ae7341bee73a9bb71a2";
+    const [toUsername] = useState("");
+    let endOfPath = location.pathname.substring(location.pathname.lastIndexOf('/') + 1);
+    let toUser = curUser._id;
+    if (endOfPath != "messages") {
+        toUser = endOfPath;
+    }
 
     const findMessages = async () =>
         await messageService.getMessagesBetweenUsers(curUser._id, toUser)
@@ -38,7 +43,6 @@ const Messages = () => {
     useEffect(async () => {
         try {
             const msgs = await messageService.getMessagesBetweenUsers(curUser._id, toUser);
-
             setMessages(msgs);
         } catch (e) {
             navigate('/login');
@@ -48,14 +52,11 @@ const Messages = () => {
     return(<>
             <h1>Messages Screen</h1>
 
-            <Search/>
-
             {
                 messages.map && messages.map(msg =>
                     <Message message={msg}
                              right={msg.fromUser === curUser._id}/>)
             }
-
             <div className="p-2 w-100">
                 <div className="row align-items-center">
                     <div className="col-10 ttr-font-size-100pc border-2 text-primary">

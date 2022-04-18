@@ -8,12 +8,22 @@ const SearchResults = ({users}) => {
                 users.map(user => {
                     return (
                         <div>
-                        <h4 className="fw-bolder pb-0 mb-0">
+
+                        <h4 className="col-10 fw-bolder pb-0 mb-0">
                             {user.username}<i className="fa fa-badge-check text-primary"></i>
                         </h4>
+
                     <h6 className="pt-0">@{user.username}</h6>
-                        {/*  Add button here to select user  */}
+                            <Link to={`/messages/${user._id}`}>
+                                    <button
+                                        className={`col-30 btn btn-primary rounded-pill fa-pull-left
+                                                        fw-bold ps-4 pe-4`}>
+                                        Message
+                                    </button>
+                            </Link>
                         </div>
+
+
                     )
                 })
             }
