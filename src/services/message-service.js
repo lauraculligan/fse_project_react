@@ -20,7 +20,6 @@ export const sendMessage = (message) =>
     api.post(`${USERS_API}/messages/`, message)
         .then(response => response.data);
 
-
 export const getMessagesBetweenUsers = (userId1,userId2) =>
     api.get(`${USERS_API}/${userId1}/messages/${userId2}`)
         .then(response => response.data);
