@@ -64,13 +64,13 @@ const Messages = () => {
                        onChange={(e) =>
                            setMessage(e.target.value)}
                        placeholder="Enter Message..."
-                       className="w-100 border-2"
+                       className="w-100 border-2 rounded-pill ps-4"
                    ></textarea>
                     </div>
                     <div className="col-2">
                         <button onClick={sendMessage}
                                 className={`btn btn-primary rounded-pill fa-pull-left
-                                fw-bold ps-4 pe-4`}>
+                                fw-bold mb-2 ps-4 pe-4`}>
                             Send
                         </button>
                     </div>
