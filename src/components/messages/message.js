@@ -6,7 +6,7 @@ const Message = ({message, right}) => {
         dateString +=  " " + date.getHours().toString()
         dateString +=  ":" + date.getMinutes().toString() + " "
     } catch (e){
-        dateString = "2/3 2:13"
+        dateString = message.sentOn.substring(11,16)
     }
 
 
