@@ -23,12 +23,14 @@ const Messages = () => {
         await messageService.getMessagesBetweenUsers(curUser._id, toUser)
             .then(messages => setMessages(messages));
     const sendMessage = async () => {
-        let messageToSend = {fromUser: curUser._id,
-            toUser: toUser,
-            message: message,
-            sentOn: new Date()}
+        if (message.length > 0) {
+            let messageToSend = {fromUser: curUser._id,
+                toUser: toUser,
+                message: message,
+                sentOn: new Date()}
 
-        await messageService.sendMessage(messageToSend).then(findMessages);
+            await messageService.sendMessage(messageToSend).then(findMessages);
+        }
     }
 
     useEffect(async () => {
@@ -55,7 +57,7 @@ const Messages = () => {
             {
                 messages.map && messages.map(msg =>
                     <Message message={msg}
-                             right={msg.fromUser === curUser._id}/>)
+                             right={msg.username === curUser._id}/>)
             }
             <div className="p-2 w-100">
                 <div className="row align-items-center">
@@ -65,6 +67,7 @@ const Messages = () => {
                            setMessage(e.target.value)}
                        placeholder="Enter Message..."
                        className="w-100 border-2"
+                       draggable="false"
                    ></textarea>
                     </div>
                     <div className="col-2">
