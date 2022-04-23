@@ -59,6 +59,7 @@ const Messages = () => {
                     <Message message={msg}
                              right={msg.username === curUser._id}/>)
             }
+
             <div className="p-2 w-100">
                 <div className="row align-items-center">
                     <div className="col-10 ttr-font-size-100pc border-2 text-primary">
@@ -68,6 +69,7 @@ const Messages = () => {
                        placeholder="Enter Message..."
                        className="w-100 border-2"
                        draggable="false"
+                       style={{resize: "none"}}
                    ></textarea>
                     </div>
                     <div className="col-2">
