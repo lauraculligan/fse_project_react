@@ -29,6 +29,7 @@ const Messages = () => {
             sentOn: new Date()}
 
         await messageService.sendMessage(messageToSend).then(findMessages);
+        setMessage('');
     }
 
     useEffect(async () => {
@@ -64,6 +65,7 @@ const Messages = () => {
                        onChange={(e) =>
                            setMessage(e.target.value)}
                        placeholder="Enter Message..."
+                       value = {message}
                        className="w-100 border-2 rounded-pill ps-4"
                    ></textarea>
                     </div>
