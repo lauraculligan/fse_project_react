@@ -52,12 +52,13 @@ const Messages = () => {
 
     return(<>
             <h1>Messages Screen</h1>
-
+            <div className={"fsep-messageScroller"}>
             {
                 messages.map && messages.map(msg =>
                     <Message message={msg}
                              right={msg.fromUser === curUser._id}/>)
             }
+            </div>
             <div className="p-2 w-100">
                 <div className="row align-items-center">
                     <div className="col-10 ttr-font-size-100pc border-2 text-primary">
