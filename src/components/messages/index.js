@@ -4,12 +4,15 @@ import * as securityService from "../../services/security-service";
 import * as messageService from "../../services/message-service";
 import {useEffect, useState} from "react"
 import {useNavigate, useLocation} from "react-router-dom";
+import {findUserById} from "../../services/users-service";
+import SearchResults from "../search/search";
 
 
 const Messages = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [curUser, setUser] = useState({});
+    const [receiveUser, setReceiveUser] = useState({});
     const [messages, setMessages] = useState({});
     const [message, setMessage] = useState("");
     const [toUsername] = useState("");
@@ -18,7 +21,8 @@ const Messages = () => {
     if (endOfPath != "messages") {
         toUser = endOfPath;
     }
-
+    // const toUserID = async () =>
+    //     await usersService.findUserById(to)
     const findMessages = async () =>
         await messageService.getMessagesBetweenUsers(curUser._id, toUser)
             .then(messages => setMessages(messages));
@@ -32,6 +36,14 @@ const Messages = () => {
             await messageService.sendMessage(messageToSend).then(findMessages);
         }
     }
+    useEffect(async () => {
+        try {
+            const user = await findUserById(toUser);
+            setReceiveUser(user);
+        } catch (e) {
+            navigate('/login');
+        }
+    }, []);
 
     useEffect(async () => {
         try {
@@ -53,6 +65,8 @@ const Messages = () => {
 
     return(<>
             <h1>Messages Screen</h1>
+
+            <h2 style={{ color: 'blue', lineHeight : 1, padding: 2, border: '3px outset #9bb5de'}}>{receiveUser.username}</h2>
 
             {
                 messages.map && messages.map(msg =>
