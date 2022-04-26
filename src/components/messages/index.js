@@ -4,6 +4,7 @@ import * as securityService from "../../services/security-service";
 import * as messageService from "../../services/message-service";
 import {useEffect, useState} from "react"
 import {useNavigate, useLocation} from "react-router-dom";
+import {findUserById} from "../../services/users-service";
 
 
 const Messages = () => {
@@ -12,6 +13,7 @@ const Messages = () => {
     const [curUser, setUser] = useState({});
     const [messages, setMessages] = useState({});
     const [message, setMessage] = useState("");
+    const [receiveUser, setReceiveUser] = useState({});
     const [toUsername] = useState("");
     let endOfPath = location.pathname.substring(location.pathname.lastIndexOf('/') + 1);
     let toUser = curUser._id;
@@ -43,6 +45,15 @@ const Messages = () => {
 
     useEffect(async () => {
         try {
+            const user = await findUserById(toUser);
+            setReceiveUser(user);
+        } catch (e) {
+            navigate('/login');
+        }
+    }, []);
+
+    useEffect(async () => {
+        try {
             const msgs = await messageService.getMessagesBetweenUsers(curUser._id, toUser);
             setMessages(msgs);
         } catch (e) {
@@ -52,6 +63,8 @@ const Messages = () => {
 
     return(<>
             <h1>Messages Screen</h1>
+            <h2 style={{ color: 'blue', lineHeight : 1, padding: 2, border: '3px outset #9bb5de'}}>{receiveUser.username}</h2>
+            
             <div className={"fsep-messageScroller"}>
             {
                 messages.map && messages.map(msg =>
