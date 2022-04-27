@@ -25,13 +25,15 @@ const Messages = () => {
         await messageService.getMessagesBetweenUsers(curUser._id, toUser)
             .then(messages => setMessages(messages));
     const sendMessage = async () => {
-        let messageToSend = {fromUser: curUser._id,
-            toUser: toUser,
-            message: message,
-            sentOn: new Date()}
+        if (message.length > 0) {
+            let messageToSend = {fromUser: curUser._id,
+                toUser: toUser,
+                message: message,
+                sentOn: new Date()}
 
-        await messageService.sendMessage(messageToSend).then(findMessages);
-        setMessage('');
+            await messageService.sendMessage(messageToSend).then(findMessages);
+            setMessage('');
+        }
     }
 
     useEffect(async () => {
@@ -64,7 +66,7 @@ const Messages = () => {
     return(<>
             <h1>Messages Screen</h1>
             <h2 style={{ color: 'blue', lineHeight : 1, padding: 2, border: '3px outset #9bb5de'}}>{receiveUser.username}</h2>
-            
+
             <div className={"fsep-messageScroller"}>
             {
                 messages.map && messages.map(msg =>
@@ -81,6 +83,8 @@ const Messages = () => {
                        placeholder="Enter Message..."
                        value = {message}
                        className="w-100 border-2 rounded-pill ps-4"
+                       draggable="false"
+                       style={{resize: "none"}}
                    ></textarea>
                     </div>
                     <div className="col-2">
